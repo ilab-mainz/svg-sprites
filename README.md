@@ -2,7 +2,7 @@
 ## Tutorials
 
 - [SVG is for everybody](https://www.youtube.com/watch?v=w83XRCkMtHQ) — talk by Chris Coyier
-- [Icon System with SVG Sprites ](https://css-tricks.com/svg-sprites-use-better-icon-fonts)
+- [Icon System with SVG Sprites ](https://css-tricks.com/svg-sprites-use-better-icon-fonts) — by [css-tricks.com](https://css-tricks.com/)
 - [Styling SVG `<use>` contents with CSS](https://tympanus.net/codrops/2015/07/16/styling-svg-use-content-css/) — by [Sara Soueidan](https://tympanus.net/codrops/author/sarasoueidan/)
 
 ## SVG Icon Sets
