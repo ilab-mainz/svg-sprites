@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <style>
+            body {
+                font-family: sans-serif;
+                padding: 50px 100px;
+            }
+            #spritesheet {
+                display: none;
+            }
+            svg.icon {
+                width: 40px;
+                height: 40px;
+                padding: 5px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            form {
+                display: inline-block;
+            }
+
+            select {
+                font-size: inherit;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <h1>SVG Spritesheet — 
+            <form>
+                <select>
+                    <option value="player">media player</option>
+                    <option value="fa_regular">fontawesome - regular</option>
+                    <option value="fa_solid">fontawesome - solid</option>
+                    <option value="ionicons">ionicons</option>
+                    <option value="md_action">material design: action</option>
+                    <option value="md_alert">material design: action</option>
+                    <option value="md_av">material design: av</option>
+                    <option value="md_communication">material design: communication</option>
+                    <option value="md_content">material design: content</option>
+                    <option value="md_device">material design: device</option>
+                    <option value="md_editor">material design: editor</option>
+                    <option value="md_file">material design: file</option>
+                    <option value="md_hardware">material design: hardware</option>
+                    <option value="md_image">material design: image</option>
+                    <option value="md_maps">material design: maps</option>
+                    <option value="md_navigation">material design: navigation</option>    
+                    <option value="md_notification">material design: notification</option>    
+                    <option value="md_places">material design: places</option> 
+                    <option value="md_social">material design: social</option> 
+                    <option value="md_toggle">material design: toggle</option> 
+                </select>
+            </form>
+        </h1>
+   
+        <div id="spritetable"></div>
+
+        <script>
+
+            {
+     
+                // URL of the spritesheet
+                //const baseURL = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/sprites/"; // use the CDN version
+                const baseURL = ""; // use the local version
+
+                // load whatever is selected (firefox keeps the previous form state)
+                loadSVG(selectValue("select"));
+
+                // add interaction to the form
+                document.querySelector("select").addEventListener("change", () => {
+                    loadSVG(selectValue("select"));
+                });                                              
+
+                // return the choice of a selector
+                function selectValue(selector) {
+                    return document.querySelector(selector).value;
+                }
+                
+                // load the spritesheet and display them in a sprite table
+                function loadSVG(spritesheet) {
+                    
+                    const md_url = "https://rawcdn.githack.com/google/material-design-icons/master/sprites/svg-sprite/";
+                    
+                    const urls = {
+                        player: "svg/symbols.svg",
+                        fa_regular: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/sprites/regular.svg",
+                        fa_solid: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/sprites/solid.svg",
+                        ionicons: "https://raw.githubusercontent.com/rastasheep/ionicons-sprite/master/sprite.svg",
+                        md_action: md_url + "svg-sprite-action-symbol.svg",
+                        md_alert: md_url + "svg-sprite-alert-symbol.svg",
+                        md_av: md_url + "svg-sprite-av-symbol.svg",
+                        md_communication: md_url + "svg-sprite-communication-symbol.svg",
+                        md_content: md_url + "svg-sprite-content-symbol.svg",
+                        md_device: md_url + "svg-sprite-device-symbol.svg",
+                        md_editor: md_url + "svg-sprite-editor-symbol.svg",
+                        md_file: md_url + "svg-sprite-file-symbol.svg",
+                        md_hardware: md_url + "svg-sprite-hardware-symbol.svg",
+                        md_image: md_url + "svg-sprite-image-symbol.svg",
+                        md_maps: md_url + "svg-sprite-maps-symbol.svg",
+                        md_navigation: md_url + "svg-sprite-navigation-symbol.svg",
+                        md_notification: md_url + "svg-sprite-notification-symbol.svg",
+                        md_places: md_url + "svg-sprite-places-symbol.svg",
+                        md_social: md_url + "svg-sprite-social-symbol.svg",
+                        md_toggle: md_url + "svg-sprite-toggle-symbol.svg",
+                        
+                    }
+      
+  
+  
+                    // Remove previous SVG from the DOM
+                    const loaded = document.querySelector('#spritesheet');
+                    if(loaded) loaded.remove();
+
+                    // Use fetch API to load SVG from a CDN and insert it at the top of the DOM
+                    fetch(urls[spritesheet])
+                        .then(response => response.text())
+                        .then(text => {
+                        // insert text at the top of the body
+                        document.body.insertAdjacentHTML("afterbegin", `<div id="spritesheet">${text}</div>`);
+                        // get the actual dom element
+                        const svg = document.querySelector("#spritesheet > svg");
+                        // insert a symbol table into the prepared div
+                        document.querySelector('#spritetable').innerHTML = symbolTable(svg);
+                    });
+
+                }
+
+                // display all symbols defined in the svg
+                function symbolTable(svg) {
+                    // create one entry for each symbol
+                    const entries = Array.from(svg.querySelectorAll('symbol')).map(e => `<svg class="icon" ><use href="#${e.id}"></use></svg>`);
+                    // create one div containing all the symbols
+                    return `<div>${entries.join('')}</div>`;
+                }
+
+            };
+
+        </script>
+    </body>
+
+</html>
